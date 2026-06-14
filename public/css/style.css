@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --inex-cyan: #00f2ff;
+    --inex-green: #39ff14;
+    --inex-purple: #bc13fe;
+    --inex-dark: #0a0a0a;
+}
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: var(--inex-dark);
+}
+
+.range-btn.active {
+    background-color: white;
+    color: black;
+}
+
+.stat-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card:hover {
+    border-color: var(--inex-cyan);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -15px rgba(0, 242, 255, 0.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--inex-cyan);
+}
+
+/* Table Hover Effect */
+tr {
+    transition: background 0.2s;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* ApexCharts Overrides */
+.apexcharts-canvas {
+    font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.apexcharts-tooltip {
+    background: #000 !important;
+    border: 1px solid #333 !important;
+    box-shadow: none !important;
+}

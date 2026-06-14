@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Docs | INEX Token</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-black text-gray-100 min-h-screen font-sans">
+    
+    <nav class="border-b border-gray-800 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-cyan-500 rounded-sm flex items-center justify-center">
+                <span class="text-black font-bold text-xl">I</span>
+            </div>
+            <h1 class="text-xl font-bold tracking-tighter uppercase">Inex <span class="text-cyan-500">Docs</span></h1>
+        </div>
+        <a href="/" class="bg-white text-black px-4 py-2 text-[10px] font-bold hover:bg-cyan-500 transition-colors duration-300 uppercase tracking-widest">
+            Back to Dashboard
+        </a>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        <h2 class="text-4xl font-bold mb-8 uppercase tracking-tighter">API & System Integration</h2>
+        
+        <section class="mb-16">
+            <h3 class="text-xl font-bold mb-4 text-cyan-500 border-b border-gray-800 pb-2 uppercase tracking-widest">1. Recording Usage (POST)</h3>
+            <p class="text-gray-400 text-sm mb-6">Use this endpoint to log every token transaction from your AI agents.</p>
+            
+            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-sm">
+                <p class="text-xs font-bold text-cyan-400 mb-2">POST /api/usage</p>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Request Body (JSON)</p>
+                        <pre class="bg-black p-4 text-xs text-green-500">
+{
+  "agent_name": "Customer-Service-Bot",
+  "model_name": "google/gemini-1.5-flash",
+  "input_tokens": 120,
+  "output_tokens": 450,
+  "total_tokens": 570,
+  "cost": 0.000085
+}</pre>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Validation Rules</p>
+                        <ul class="text-[11px] text-gray-400 list-disc pl-4 space-y-1">
+                            <li><span class="text-white">agent_name:</span> String (Required)</li>
+                            <li><span class="text-white">model_name:</span> String (Required - Use OpenRouter ID)</li>
+                            <li><span class="text-white">total_tokens:</span> Integer (Required)</li>
+                            <li><span class="text-white">cost:</span> Numeric (Required - Recommended 6 decimal places)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h3 class="text-xl font-bold mb-4 text-purple-500 border-b border-gray-800 pb-2 uppercase tracking-widest">2. Analytics Retrieval (GET)</h3>
+            <p class="text-gray-400 text-sm mb-6">Fetch processed analytics, trends, and filtered data.</p>
+            
+            <div class="bg-gray-900/50 border border-gray-800 p-6 rounded-sm">
+                <p class="text-xs font-bold text-purple-400 mb-2">GET /api/analytics</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Query Parameters</p>
+                        <ul class="text-[11px] text-gray-400 space-y-2">
+                            <li><span class="text-white">range:</span> "all", "7days", "30days", "custom"</li>
+                            <li><span class="text-white">agent:</span> Filter by specific agent name</li>
+                            <li><span class="text-white">model:</span> Filter by specific model ID</li>
+                            <li><span class="text-white">start / end:</span> YYYY-MM-DD for custom range</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Response Data</p>
+                        <p class="text-[11px] text-gray-400">Returns an object containing <span class="text-white">stats</span> (totals, efficiency, ratios), <span class="text-white">charts</span> (trends, distributions), and <span class="text-white">raw_data</span> (latest logs).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <h3 class="text-xl font-bold mb-4 text-green-500 border-b border-gray-800 pb-2 uppercase tracking-widest">3. Real-time Polling</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+                The dashboard uses an active polling mechanism to keep data fresh. By default, it requests new analytics every <span class="text-white">5 seconds</span>. This ensures that the "Latest Activity" log and all charts reflect recent transactions without manual refreshes.
+            </p>
+        </section>
+    </main>
+
+    <footer class="border-t border-gray-800 py-8 text-center text-gray-600 text-[10px] uppercase tracking-widest">
+        &copy; 2026 INEX SYSTEMS &bull; API DOCUMENTATION v2.0
+    </footer>
+
+</body>
+</html>
