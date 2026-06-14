@@ -33,7 +33,7 @@ A high-performance, minimalist AI Token Analytics Platform designed for senior e
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AmmarBasha2011/Tokens_Usage.git
    cd Tokens_Usage
    ```
 
