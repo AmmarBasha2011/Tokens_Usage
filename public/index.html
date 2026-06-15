@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytics | INEX Token</title>
+    <title>INEX Analytics V2 | Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,16 +11,56 @@
 </head>
 <body class="bg-black text-gray-100 min-h-screen font-sans text-[11px] uppercase tracking-widest">
     
+    <!-- V2 Welcome Modal -->
+    <div id="v2-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+        <div class="bg-gray-900 border border-cyan-500/50 p-8 max-w-lg w-full rounded-sm shadow-2xl shadow-cyan-500/20">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 bg-cyan-500 rounded-sm flex items-center justify-center">
+                    <span class="text-black font-bold text-2xl">V2</span>
+                </div>
+                <h2 class="text-2xl font-bold text-white tracking-tighter">WELCOME TO INEX V2</h2>
+            </div>
+
+            <div class="space-y-4 mb-8">
+                <div class="flex gap-4">
+                    <div class="text-cyan-500 mt-1"><i class="fas fa-chart-line fa-lg"></i></div>
+                    <div>
+                        <h4 class="text-white font-bold text-[10px] mb-1">ADVANCED COST ANALYTICS</h4>
+                        <p class="text-gray-400 normal-case tracking-normal leading-relaxed">Dual-axis charts tracking cost against token volume in real-time.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-purple-500 mt-1"><i class="fas fa-filter fa-lg"></i></div>
+                    <div>
+                        <h4 class="text-white font-bold text-[10px] mb-1">DEEP FILTRATION</h4>
+                        <p class="text-gray-400 normal-case tracking-normal leading-relaxed">Enhanced cross-filtering by Agent, Model, and Custom Date Ranges.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-green-500 mt-1"><i class="fas fa-bolt fa-lg"></i></div>
+                    <div>
+                        <h4 class="text-white font-bold text-[10px] mb-1">PERFORMANCE ENGINE</h4>
+                        <p class="text-gray-400 normal-case tracking-normal leading-relaxed">Refined backend processing for ultra-fast analytics generation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-3 text-[10px] tracking-[0.2em] transition-all">INITIALIZE DASHBOARD</button>
+        </div>
+    </div>
+
     <main class="max-w-7xl mx-auto px-6 py-8">
         <!-- Dashboard Header -->
         <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-10 gap-6">
             <div>
-                <h2 class="text-3xl font-bold tracking-tight uppercase text-white">Advanced Control</h2>
-                <p class="text-gray-500 mt-1 font-bold">Deep analytics & resource tracking</p>
+                <div class="flex items-center gap-3">
+                    <h2 class="text-3xl font-bold tracking-tight uppercase text-white">INEX <span class="text-cyan-500">Analytics</span></h2>
+                    <span class="bg-cyan-500/10 text-cyan-500 px-2 py-0.5 rounded-sm text-[9px] font-bold border border-cyan-500/20">V2.0 RELEASE</span>
+                </div>
+                <p class="text-gray-500 mt-1 font-bold">Comprehensive resource tracking & token economics</p>
             </div>
             
             <div class="flex flex-wrap gap-4 items-center">
-                <!-- Custom Date Range -->
                 <div class="flex items-center gap-2 bg-gray-900/50 p-2 rounded-sm border border-gray-800">
                     <input type="date" id="custom-start" class="bg-transparent border-none outline-none text-[10px] text-gray-400">
                     <span class="text-gray-700">to</span>
@@ -36,34 +76,16 @@
             </div>
         </div>
 
-        <!-- Dynamic Model Pricing Card -->
-        <div id="model-pricing-card" class="hidden mb-10 p-6 border border-cyan-500/30 bg-cyan-500/5 rounded-sm flex justify-between items-center">
-            <div>
-                <h4 id="selected-model-name" class="text-lg font-bold text-cyan-400">MODEL INFO</h4>
-                <p class="text-[10px] text-gray-500 mt-1">Provider pricing metrics per 1k tokens</p>
-            </div>
-            <div class="flex gap-12 text-right">
-                <div>
-                    <p class="text-[10px] text-gray-500 font-bold mb-1">PROMPT (INPUT)</p>
-                    <p id="price-input" class="text-xl font-mono text-white">$0.0000</p>
-                </div>
-                <div>
-                    <p class="text-[10px] text-gray-500 font-bold mb-1">COMPLETION (OUTPUT)</p>
-                    <p id="price-output" class="text-xl font-mono text-white">$0.0000</p>
-                </div>
-            </div>
-        </div>
-
         <!-- Global Filters -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
             <div class="bg-gray-900/50 border border-gray-800 p-4">
-                <p class="text-gray-500 text-[10px] font-bold mb-2">Filter Agent</p>
+                <p class="text-gray-500 text-[10px] font-bold mb-2">Agent Context</p>
                 <select id="filter-agent" onchange="fetchData()" class="w-full bg-black border border-gray-800 p-2 text-[10px] outline-none text-white">
                     <option value="">All Agents</option>
                 </select>
             </div>
             <div class="bg-gray-900/50 border border-gray-800 p-4">
-                <p class="text-gray-500 text-[10px] font-bold mb-2">Filter Model</p>
+                <p class="text-gray-500 text-[10px] font-bold mb-2">Model Architecture</p>
                 <select id="filter-model" onchange="fetchData()" class="w-full bg-black border border-gray-800 p-2 text-[10px] outline-none text-white">
                     <option value="">All Models</option>
                 </select>
@@ -71,53 +93,75 @@
         </div>
 
         <!-- Primary Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <div class="stat-card p-8 border border-gray-800 bg-gray-900/20">
-                <p class="text-gray-500 text-[10px] font-bold mb-4">Total Cost</p>
-                <h3 id="stat-total-cost" class="text-4xl font-bold text-white">$0.00</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div class="stat-card p-6 border border-gray-800 bg-gray-900/20">
+                <p class="text-gray-500 text-[9px] font-bold mb-4">Cumulative Expenditure</p>
+                <h3 id="stat-total-cost" class="text-3xl font-bold text-white">$0.00</h3>
             </div>
-            <div class="stat-card p-8 border border-gray-800 bg-gray-900/20">
-                <p class="text-gray-500 text-[10px] font-bold mb-4">Input Volume</p>
-                <h3 id="stat-input-tokens" class="text-4xl font-bold text-cyan-500">0</h3>
+            <div class="stat-card p-6 border border-gray-800 bg-gray-900/20">
+                <p class="text-gray-500 text-[9px] font-bold mb-4">Total Token Throughput</p>
+                <h3 id="stat-total-tokens" class="text-3xl font-bold text-cyan-500">0</h3>
             </div>
-            <div class="stat-card p-8 border border-gray-800 bg-gray-900/20">
-                <p class="text-gray-500 text-[10px] font-bold mb-4">Output Volume</p>
-                <h3 id="stat-output-tokens" class="text-4xl font-bold text-purple-500">0</h3>
+            <div class="stat-card p-6 border border-gray-800 bg-gray-900/20">
+                <p class="text-gray-500 text-[9px] font-bold mb-4">Avg Cost / 1M Tokens</p>
+                <h3 id="stat-avg-cost-1m" class="text-3xl font-bold text-purple-500">$0.00</h3>
+            </div>
+            <div class="stat-card p-6 border border-gray-800 bg-gray-900/20">
+                <p class="text-gray-500 text-[9px] font-bold mb-4">I/O Token Ratio</p>
+                <h3 id="stat-io-ratio" class="text-3xl font-bold text-green-500">0.00</h3>
             </div>
         </div>
 
-        <!-- Chart Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
-            <div class="p-8 border border-gray-800 bg-gray-900/20">
-                <h4 class="text-[10px] font-bold text-cyan-500 mb-8 border-l-2 border-cyan-500 pl-4">Token Consumption Trend</h4>
-                <div class="h-[300px]">
-                    <canvas id="trendChart"></canvas>
+        <!-- V2 Charts -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+            <div class="lg:col-span-2 p-8 border border-gray-800 bg-gray-900/20">
+                <h4 class="text-[10px] font-bold text-cyan-500 mb-8 border-l-2 border-cyan-500 pl-4">Economic Trends (Cost vs Volume)</h4>
+                <div class="h-[350px]">
+                    <canvas id="mainTrendChart"></canvas>
                 </div>
             </div>
             <div class="p-8 border border-gray-800 bg-gray-900/20">
-                <h4 class="text-[10px] font-bold text-purple-500 mb-8 border-l-2 border-purple-500 pl-4">Model Distribution</h4>
-                <div class="h-[300px] flex justify-center">
-                    <canvas id="modelChart"></canvas>
+                <h4 class="text-[10px] font-bold text-purple-500 mb-8 border-l-2 border-purple-500 pl-4">Model Utilization</h4>
+                <div class="h-[350px] flex items-center">
+                    <canvas id="modelPieChart"></canvas>
                 </div>
             </div>
         </div>
 
         <div class="p-8 border border-gray-800 bg-gray-900/20 mb-10">
-            <h4 class="text-[10px] font-bold text-white mb-8 border-l-2 border-white pl-4">Agent Performance Breakdown</h4>
+            <h4 class="text-[10px] font-bold text-white mb-8 border-l-2 border-white pl-4">Agent Performance Metrics</h4>
             <div class="h-[300px]">
-                <canvas id="agentChart"></canvas>
+                <canvas id="agentBarChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Recent Logs Table -->
+        <div class="p-8 border border-gray-800 bg-gray-900/20">
+            <div class="flex justify-between items-center mb-8 border-l-2 border-white pl-4">
+                <h4 class="text-[10px] font-bold text-white">Live Transaction Stream</h4>
+                <span class="text-[9px] text-gray-500 font-bold">LAST 100 RECORDS</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="border-b border-gray-800 text-gray-500">
+                            <th class="py-4 font-bold">Execution Time</th>
+                            <th class="py-4 font-bold">Agent Identity</th>
+                            <th class="py-4 font-bold">Model Engine</th>
+                            <th class="py-4 font-bold">Input</th>
+                            <th class="py-4 font-bold">Output</th>
+                            <th class="py-4 font-bold">Cost ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-table-body">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
     <script src="/js/components.js"></script>
     <script src="/js/app.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            renderNav('dashboard');
-            renderFooter();
-            fetchData();
-        });
-    </script>
 </body>
 </html>

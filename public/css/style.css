@@ -4,12 +4,14 @@
     --inex-cyan: #00f2ff;
     --inex-green: #39ff14;
     --inex-purple: #bc13fe;
-    --inex-dark: #0a0a0a;
+    --inex-red: #ff0055;
+    --inex-dark: #050505;
 }
 
 body {
     font-family: 'Space Grotesk', sans-serif;
     background-color: var(--inex-dark);
+    color: #e0e0e0;
 }
 
 .range-btn.active {
@@ -17,19 +19,24 @@ body {
     color: black;
 }
 
+.range-btn:not(.active):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .stat-card {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .stat-card:hover {
-    border-color: var(--inex-cyan);
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px -15px rgba(0, 242, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -37,29 +44,43 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #333;
+    background: #222;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--inex-cyan);
 }
 
-/* Table Hover Effect */
-tr {
-    transition: background 0.2s;
+/* Table styling */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
-tr:hover {
-    background: rgba(255, 255, 255, 0.03);
+th {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: #444;
 }
 
-/* ApexCharts Overrides */
-.apexcharts-canvas {
-    font-family: 'Space Grotesk', sans-serif !important;
+td {
+    font-size: 10px;
 }
 
-.apexcharts-tooltip {
-    background: #000 !important;
-    border: 1px solid #333 !important;
-    box-shadow: none !important;
+/* Form elements */
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+/* Transitions */
+.nav-link {
+    transition: all 0.2s;
+}
+
+canvas {
+    filter: saturate(1.2);
 }

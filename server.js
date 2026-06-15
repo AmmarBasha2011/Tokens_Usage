@@ -141,7 +141,8 @@ app.get('/api/analytics', async (req, res) => {
             input_output_ratio: "0.00",
             models_distribution: {},
             agents_distribution: {},
-            usage_trends: {}
+            usage_trends: {},
+            cost_trends: {}
         };
 
         safeData.forEach(entry => {
@@ -162,6 +163,7 @@ app.get('/api/analytics', async (req, res) => {
 
             const date = entry.created_at ? entry.created_at.split('T')[0] : 'unknown';
             stats.usage_trends[date] = (stats.usage_trends[date] || 0) + total;
+            stats.cost_trends[date] = (stats.cost_trends[date] || 0) + cost;
         });
 
         if (stats.total_tokens > 0) {
@@ -172,12 +174,13 @@ app.get('/api/analytics', async (req, res) => {
         }
 
         res.json({
-            all_logs: safeData, 
+            all_logs: safeData.slice(0, 100),
             stats,
             charts: {
                 models: stats.models_distribution,
                 agents: stats.agents_distribution,
-                trends: stats.usage_trends
+                trends: stats.usage_trends,
+                cost_trends: stats.cost_trends
             }
         });
     } catch (err) {
